@@ -101,8 +101,7 @@ public class AuthService {
         response.setName(profile.getName());
         response.setUsername(profile.getUsername());
         response.setRoleList(profileRoleRepository.getAllRolesByProfileId(profile.getId()));
-
-        response.setJwt(JwtUtil.encode(profile.getId(), response.getRoleList()));
+        response.setJwt(JwtUtil.encode( profile.getUsername(), profile.getId(), response.getRoleList()));
         return response;
     }
 }

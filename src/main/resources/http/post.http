@@ -1,0 +1,13 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+### Creaed Post
+
+POST localhost:8080/post/create
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYXZycnV6aWV2NzdAZ21haWwuY29tIiwicm9sZXMiOiJST0xFX1VTRVIsUk9MRV9BRE1JTiIsImlkIjoiMjUiLCJpYXQiOjE3Mzk4NzAxNjMsImV4cCI6MTczOTk1NjU2M30.CMngcuFv35zPE1YjqS0mfJA633RaOAJYAlhgXXKsS0gMGj10OFPyY9rsNhICGZGL83aKyxia5a-CUvbwSTxbNg
+
+{
+
+}

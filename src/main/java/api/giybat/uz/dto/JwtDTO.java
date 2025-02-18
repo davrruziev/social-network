@@ -9,10 +9,12 @@ public class JwtDTO {
 
     private Integer id;
     private List<ProfileRole> roleList;
+    private String username;
 
-    public JwtDTO(Integer id, List<ProfileRole> roleList) {
+    public JwtDTO( String username, Integer id, List<ProfileRole> roleList) {
         this.id = id;
         this.roleList = roleList;
+        this.username = username;
     }
 
     public Integer getId() {
@@ -29,5 +31,13 @@ public class JwtDTO {
 
     public void setRoleList(List<ProfileRole> roleList) {
         this.roleList = roleList;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

@@ -17,20 +17,21 @@ public class JwtUtil {
     private static final int tokenLiveTime = 1000 * 3600 * 24; // 1-day
     private static final String secretKey = "veryLongSecretmazgillattayevlasharaaxmojonjinnijonsurbetbekkiydirhonuxlatdibekloxovdangasabekochkozjonduxovmashaynikmaydagapchishularnioqiganbolsangizgapyoqaniqsizmazgi";
 //private static final String secretKey = "davr";
-    public static String encode(Integer id, List<ProfileRole> roleList) {
+    public static String encode(String username, Integer id, List<ProfileRole> roleList) {
         String strRoles = roleList.stream().map(Enum::name).collect(Collectors.joining(","));
 
         Map<String, String> claims = new HashMap<>();
         claims.put("roles", strRoles);
+        claims.put("id", String.valueOf(id));
 
 
         return Jwts
                 .builder()
-                .subject(String.valueOf(id))
+                .subject(username)
                 .claims(claims)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + tokenLiveTime))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInKey())
                 .compact();
     }
 
@@ -41,8 +42,9 @@ public class JwtUtil {
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
-        Integer id= Integer.valueOf(claims.getSubject());
-        String strRole = (String) claims.get("role");
+        Integer id= Integer.valueOf(claims.get("id").toString());
+        String username = claims.getSubject();
+        String strRole = (String) claims.get("roles");
 
         String[] roleArray = strRole.split(",");
 
@@ -52,7 +54,7 @@ public class JwtUtil {
         }
 
 
-        return new JwtDTO(id,roleLis);
+        return new JwtDTO( username, id,roleLis);
     }
 
     public static String encode(Integer id) {
@@ -63,7 +65,7 @@ public class JwtUtil {
                 .subject(String.valueOf(id))
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + tokenLiveTime))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignInKey())
                 .compact();
     }
 
