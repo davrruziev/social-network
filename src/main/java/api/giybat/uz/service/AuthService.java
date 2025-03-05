@@ -1,5 +1,6 @@
 package api.giybat.uz.service;
 
+import api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.dto.AuthDTO;
 import api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.dto.RegistrationDTO;
@@ -35,7 +36,7 @@ public class AuthService {
     private ProfileRoleRepository profileRoleRepository;
 
 
-    public String registration(RegistrationDTO dto) {
+    public AppResponse<String> registration(RegistrationDTO dto) {
 
         //1. validation
 
@@ -65,7 +66,7 @@ public class AuthService {
         profileRoleService.created(profile.getId(), ProfileRole.ROLE_USER);
         emailSendingService.sendRegistrationEmail(profile.getUsername(), profile.getId());
 
-        return "success registration save";
+        return new AppResponse<>("success registration save ");
     }
 
     public String regVerification(String token) {

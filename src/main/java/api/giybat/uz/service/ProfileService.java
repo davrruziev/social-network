@@ -20,7 +20,6 @@ public class ProfileService {
         Optional<ProfileEntity> optional = profileRepository.findByIdAndVisibleTrue(id);
         if (optional.isEmpty()) {
             throw new AppBadException("profile not found");
-
         }
         return optional.get();
     }

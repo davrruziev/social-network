@@ -8,6 +8,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.concurrent.CompletableFuture;
+
 @Service
 public class EmailSendingService {
 
@@ -21,7 +23,6 @@ public class EmailSendingService {
         String body = " Please link to link completing registration:  http://localhost:8080/auth/registration/verification/" + JwtUtil.encode(profileId);
         System.out.println(JwtUtil.encode(profileId));
         sendMail(email, subject, body);
-
     }
 
     private void sendMail(String email, String subject, String text) {
@@ -30,7 +31,10 @@ public class EmailSendingService {
         message.setTo(email);
         message.setSubject(subject);
         message.setText(text);
-        javaMailSender.send(message);
+        CompletableFuture.runAsync(() -> {
+            javaMailSender.send(message);
+        });
+
     }
 
 }

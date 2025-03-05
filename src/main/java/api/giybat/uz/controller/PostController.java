@@ -15,7 +15,6 @@ public class PostController {
     public String create(@RequestBody PostDTO dto) {
         System.out.println(SpringSecurityUtil.getCurrentEntity());
         System.out.println(SpringSecurityUtil.getCurrentUserId());
-
         return "done";
     }
 }

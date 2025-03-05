@@ -56,9 +56,7 @@ public class JwtUtil {
 
         return new JwtDTO( username, id,roleLis);
     }
-
     public static String encode(Integer id) {
-
 
         return Jwts
                 .builder()
@@ -68,7 +66,6 @@ public class JwtUtil {
                 .signWith(getSignInKey())
                 .compact();
     }
-
     public static Integer decodeRegVer(String token) {
         Claims claims = Jwts
                 .parser()
@@ -79,7 +76,6 @@ public class JwtUtil {
         Integer id= Integer.valueOf(claims.getSubject());
         return id;
     }
-
     private static SecretKey getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);

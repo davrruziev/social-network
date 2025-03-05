@@ -1,5 +1,6 @@
 package api.giybat.uz.controller;
 
+import api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.dto.AuthDTO;
 import api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.dto.RegistrationDTO;
@@ -19,7 +20,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/registration")
-    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationDTO dto) {
+    public ResponseEntity<AppResponse<String>> registration(@Valid @RequestBody RegistrationDTO dto) {
         return ResponseEntity.ok().body(authService.registration(dto));
     }
 
