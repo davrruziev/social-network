@@ -21,7 +21,7 @@ public class EmailSendingService {
 
     public void sendRegistrationEmail(String email, Integer profileId, AppLanguage lang){
         String subject = "Registration Confirmation";
-        String body = " Please link to link completing registration:  http://localhost:8080/auth/registration/verification/" + JwtUtil.encode(profileId)+"?lang="+lang.name();
+        String body = " Please link to link completing registration:  http://localhost:8080/auth/registration/email-verification/" + JwtUtil.encode(profileId)+"?lang="+lang.name();
         System.out.println(JwtUtil.encode(profileId));
         sendMail(email, subject, body);
     }

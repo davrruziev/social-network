@@ -4,6 +4,7 @@ import api.giybat.uz.dto.AppResponse;
 import api.giybat.uz.dto.AuthDTO;
 import api.giybat.uz.dto.ProfileDTO;
 import api.giybat.uz.dto.RegistrationDTO;
+import api.giybat.uz.dto.sms.SmsVerificationDTO;
 import api.giybat.uz.entity.ProfileEntity;
 import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.enums.GeneralStatus;
@@ -38,6 +39,8 @@ public class AuthService {
     private ResourceBundleService bundleService;
     @Autowired
     private SmsSendService smsSendService;
+    @Autowired
+    private SmsHistoryService smsHistoryService;
 
 
     public AppResponse<String> registration(RegistrationDTO dto, AppLanguage lang) {
@@ -68,13 +71,13 @@ public class AuthService {
         profileRepository.save(profile);
 
         profileRoleService.created(profile.getId(), ProfileRole.ROLE_USER);
-      //  emailSendingService.sendRegistrationEmail(profile.getUsername(), profile.getId(), lang);
+        //  emailSendingService.sendRegistrationEmail(profile.getUsername(), profile.getId(), lang);
         smsSendService.sendRegistrationSms(profile.getUsername());
 
         return new AppResponse<>(bundleService.getMessage("email.confirm.send", lang));
     }
 
-    public String regVerification(String token, AppLanguage lang) {
+    public String registrationEmailVerification(String token, AppLanguage lang) {
         try {
             Integer profileId = JwtUtil.decodeRegVer(token);
             ProfileEntity profile = profileService.getById(profileId);
@@ -103,11 +106,35 @@ public class AuthService {
             throw new AppBadException(bundleService.getMessage("user.status.wrong", lang));
         }
 
+        return getLoginInResponse(profile);
+    }
+
+    public ProfileDTO registrationSmsVerification(SmsVerificationDTO dto, AppLanguage lang) {
+
+
+        Optional<ProfileEntity> optinal = profileRepository.findByUsernameAndVisibleTrue(dto.getPhone());
+        if (optinal.isEmpty()) {
+            throw new AppBadException(bundleService.getMessage("profile.not.found", lang));
+        }
+        ProfileEntity profile = optinal.get();
+        if (!profile.getStatus().equals(GeneralStatus.IN_REGISTRATION)) {
+            throw new AppBadException(bundleService.getMessage("check.status.sms", lang));
+        }
+         //check code
+        smsHistoryService.check(dto.getPhone(), dto.getCode(), lang);
+           //Active
+        profileRepository.changeStatus(profile.getId(), GeneralStatus.ACTIVE);
+          //response
+        return getLoginInResponse(profile);
+
+    }
+
+    private ProfileDTO getLoginInResponse(ProfileEntity profile) {
         ProfileDTO response = new ProfileDTO();
         response.setName(profile.getName());
         response.setUsername(profile.getUsername());
         response.setRoleList(profileRoleRepository.getAllRolesByProfileId(profile.getId()));
-        response.setJwt(JwtUtil.encode( profile.getUsername(), profile.getId(), response.getRoleList()));
+        response.setJwt(JwtUtil.encode(profile.getUsername(), profile.getId(), response.getRoleList()));
         return response;
     }
 }

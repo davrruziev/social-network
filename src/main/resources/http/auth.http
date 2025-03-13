@@ -26,3 +26,13 @@ Content-Type: application/json
   "username": "davrruziev77@gmail.com",
   "password": "12345"
 }
+
+### Registration Sms Verification
+POST localhost:8080/auth/registration/sms-verification
+Content-Type: application/json
+Accept-Language: UZ
+
+{
+  "phone": "998906047564",
+  "code": "28163"
+}
