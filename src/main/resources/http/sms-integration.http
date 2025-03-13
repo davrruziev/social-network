@@ -1,0 +1,28 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+### Eskis Login
+POST http://notify.eskiz.uz/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "davrruziev77@gmail.com",
+  "password": "zGVsiQo0jxXsGIpdrAVVK8avEEBe6IAsf5RLom6h"
+}
+
+### Eskis sms Send
+POST http://notify.eskiz.uz/api/message/sms/send
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDQyNzIyMzUsImlhdCI6MTc0MTY4MDIzNSwicm9sZSI6InRlc3QiLCJzaWduIjoiOTUxZGJjNGNiM2IxNTQxMzEyMTVjZWMyOGFhYWE2YmY3OTQ2NGQxYWE0ZjVkYWI4ZmEyNjY1OTZmNmU0Mzc4NyIsInN1YiI6IjEwMTQ1In0.AZdaYronPCjRaU_mJh46K0gKnS_NEeaQ2nIdJGud09o
+
+{
+  "mobile_phone": "998990057715",
+  "message": "Bu Eskiz dan test",
+  "from": "4546"
+}
+
+
+### <#> Ro'yxatdan o'tish uchun parolni kiriting (code)  : 122333 number
+
+

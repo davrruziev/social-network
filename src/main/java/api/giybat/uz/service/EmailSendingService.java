@@ -1,6 +1,7 @@
 package api.giybat.uz.service;
 
 import api.giybat.uz.dto.MessageDTO;
+import api.giybat.uz.enums.AppLanguage;
 import api.giybat.uz.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ public class EmailSendingService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public void sendRegistrationEmail(String email, Integer profileId){
+    public void sendRegistrationEmail(String email, Integer profileId, AppLanguage lang){
         String subject = "Registration Confirmation";
-        String body = " Please link to link completing registration:  http://localhost:8080/auth/registration/verification/" + JwtUtil.encode(profileId);
+        String body = " Please link to link completing registration:  http://localhost:8080/auth/registration/verification/" + JwtUtil.encode(profileId)+"?lang="+lang.name();
         System.out.println(JwtUtil.encode(profileId));
         sendMail(email, subject, body);
     }

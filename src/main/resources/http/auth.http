@@ -6,19 +6,21 @@ GET https://examples.http-client.intellij.net/get
 
 POST localhost:8080/auth/registration
 Content-Type: application/json
+Accept-Language: UZ
 
 {
-  "name": "Test",
-  "username": "davrruziev77@gmail.com",
+  "name": "Davr",
+  "username": "998906047564",
   "password": "12345"
 }
 
 ### Verification
-GET http://localhost:8080/auth/registration/verification/{profileId}
+GET http://localhost:8080/auth/registration/verification/{profileId}?lang=UZ
 
 ### Login
 POST localhost:8080/auth/login
 Content-Type: application/json
+
 
 {
   "username": "davrruziev77@gmail.com",
